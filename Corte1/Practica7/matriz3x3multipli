@@ -1,0 +1,87 @@
+package matriz3x3multipli;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Matriz3x3multipli {
+
+    public ArrayList<ArrayList<Integer>> data;
+    public int filas;
+    public int columnas;
+
+    public Matriz3x3multipli() {
+        filas = 3;
+        columnas = 3;
+        data = new ArrayList<>();
+
+        for (int i = 0; i < filas; i++) {
+            data.add(new ArrayList<Integer>());
+            for (int j = 0; j < columnas; j++) {
+                data.get(i).add(0);
+            }
+        }
+    }
+
+    public void cargar() {
+        Scanner sc = new Scanner(System.in);
+
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
+                System.out.print("data[" + i + "][" + j + "]: ");
+                data.get(i).set(j, sc.nextInt());
+            }
+        }
+    }
+
+    public void imprimir() {
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
+                System.out.print(data.get(i).get(j) + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static Matriz3x3multipli multiplicar(Matriz3x3multipli a, Matriz3x3multipli b) {
+
+        Matriz3x3multipli resultado = new Matriz3x3multipli();
+
+        for (int i = 0; i < a.filas; i++) {
+            for (int j = 0; j < b.columnas; j++) {
+
+                int valor = 0;
+
+                for (int k = 0; k < a.columnas; k++) {
+                    valor += a.data.get(i).get(k) * b.data.get(k).get(j);
+                }
+
+                resultado.data.get(i).set(j, valor);
+            }
+        }
+
+        return resultado;
+    }
+
+    public static void main(String[] args) {
+
+        Matriz3x3multipli m1 = new Matriz3x3multipli();
+        Matriz3x3multipli m2 = new Matriz3x3multipli();
+
+        System.out.println("Ingrese datos de la matriz 1");
+        m1.cargar();
+
+        System.out.println("Ingrese datos de la matriz 2");
+        m2.cargar();
+
+        Matriz3x3multipli resultado = multiplicar(m1, m2);
+
+        System.out.println("Matriz 1:");
+        m1.imprimir();
+
+        System.out.println("Matriz 2:");
+        m2.imprimir();
+
+        System.out.println("Multiplicación de matrices:");
+        resultado.imprimir();
+    }
+}
